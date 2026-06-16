@@ -67,13 +67,24 @@ function playRound(humanChoice, computerChoice){
     }
     console.log (`SCORE  Human: ${humanScore} | Computer: ${computerScore}`);
 }
-    const humanSelection = getHumanChoice();
-    const computerSelection = getComputerChoice();
-
-    playRound(humanSelection, computerSelection);
-
+   
     //Step 6: Logic to play entire game (5 rounds)
 
     function playGame(){
-        
+        humanScore = 0;
+        computerScore = 0;
+        console.log("Let's start a new battle!!!")
+
+        for (let round = 1; round <= 5; round++) {
+            console.log(`\n*** ROUND ${round} ***`);
+
+            const humanSelection = getHumanChoice();
+            const computerSelection = getComputerChoice();
+
+            playRound(humanSelection, computerSelection);
+        }
+    
+
     }
+
+    playGame();
