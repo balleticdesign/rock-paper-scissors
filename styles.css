@@ -1,0 +1,21 @@
+.uniform-button {
+    background-color: lightsteelblue;
+    color: navy;
+    padding: 5px 10px;
+    border-radius: 7px;
+    border: 10px;
+    margin: 5px;
+    font-size: medium;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    cursor: pointer;
+    
+}
+
+.uniform-text-content {
+    color:rgb(15, 15, 56);
+    font-size: 24px;
+    font-family: Roboto;
+    font-weight: 800;
+    margin: 10px
+
+}

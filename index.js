@@ -1,4 +1,5 @@
-//Step 2: Computer Choice (Hint provided: Math.random Method)
+let humanScore = 0;
+let computerScore = 0;
 
 function getComputerChoice (){
     const randomChoice = Math.floor(Math.random() * 3) + 1; 
@@ -15,42 +16,21 @@ function getComputerChoice (){
             choice = "scissors";
             break;
     }
-    console.log(`Computer choice: ${choice}`);
+
     return choice;
 }
-   
-//Step 3: Human Choice (Hint provided: Prompt Method)
 
-function getHumanChoice (){
-    let userInput = prompt("Ready to battle... Rock, Paper or Scissors?").toLowerCase();  //.toLowerCase is part of step 5
-    let choice = "";
+function playRound(humanChoice){
 
-    switch(userInput){
-        case "rock":
-            choice = "rock";
-            break;
-        case "paper":
-            choice = "paper";
-            break;
-        case "scissors":
-            choice = "scissors";
-            break;  
-    }  
-    console.log(`Human Choice: ${choice}`);
-    return choice; 
-}
-  
-//Step 4: Declare Score Variables 
-
-let humanScore = 0;
-let computerScore = 0;
-
-//Step 5: Logic for a single round
-
-function playRound(humanChoice, computerChoice){
+    const computerChoice = getComputerChoice();
+    humanDisplay.textContent = `You chose: ${humanChoice.toUpperCase()}`;
+    computerDisplay.textContent = `The Machine chose: ${computerChoice.toUpperCase()}`;
+    
+    let roundResultMessage = "";
     
   if (humanChoice === computerChoice){
-        console.log("Neither the human nor the machine prevails!");
+    roundResultMessage = "Neither human nor machine prevail!";
+        
     }
     else if (
         (humanChoice === "rock" && computerChoice === "scissors") ||
@@ -59,32 +39,90 @@ function playRound(humanChoice, computerChoice){
     )
     {
         humanScore++;
-        console.log("Humanity wins this round!");
+        roundResultMessage = "Humanity wins this round!"
     }
     else {
         computerScore++;
-        console.log("Machine takes over the world!")
+        roundResultMessage = "Machine wins this round!"
     }
-    console.log (`SCORE  Human: ${humanScore} | Computer: ${computerScore}`);
+
+    resultDisplay.textContent = `${roundResultMessage} Score - Human: ${humanScore} | Machine: ${computerScore}`;
+
+    if (humanScore === 5 || computerScore === 5) {
+        announceWinner();
+    }
 }
-   
-    //Step 6: Logic to play entire game (5 rounds)
 
-    function playGame(){
-        humanScore = 0;
-        computerScore = 0;
-        console.log("Let's start a new battle!!!")
-
-        for (let round = 1; round <= 5; round++) {
-            console.log(`\n*** ROUND ${round} ***`);
-
-            const humanSelection = getHumanChoice();
-            const computerSelection = getComputerChoice();
-
-            playRound(humanSelection, computerSelection);
-        }
-    
-
+function announceWinner() {
+    if (humanScore === 5){
+        resultDisplay.textContent = `Humanity wins the ultimate battle! Final Score - Human: ${humanScore} | Machine: ${computerScore}`;
+    } else {
+        resultDisplay.textContent = `Game Over! Machine has taken over the world! Final Score - Human: ${humanScore} | Machine: ${computerScore}`;
     }
 
-    playGame();
+    btnRock.disabled = true;
+    btnPaper.disabled = true;
+    btnScissors.disabled = true;
+
+}
+
+function resetGame() {
+    humanScore = 0;
+    computerScore = 0;
+
+    btnRock.disabled = false;
+    btnPaper.disabled = false;
+    btnScissors.disabled = false;
+
+    humanDisplay.textContent = "Waiting for your choice...";
+    computerDisplay.textContent = "Computer is waiting for your move...";
+    resultDisplay.textContent = "";
+}
+
+    const playGame = document.createElement("div");
+    playGame.textContent = "Click a button to start the game!";
+    document.body.appendChild(playGame);   
+
+    const btnRock = document.createElement("button");
+    btnRock.addEventListener("click", () => playRound("rock"));
+    btnRock.textContent = "Rock";
+    document.body.appendChild(btnRock);
+
+    const btnPaper = document.createElement("button");
+    btnPaper.addEventListener("click", () => playRound("paper"));
+    btnPaper.textContent = "Paper";
+    document.body.appendChild(btnPaper);
+
+    const btnScissors = document.createElement("button");
+    btnScissors.addEventListener("click", () => playRound("scissors"));
+    btnScissors.textContent = "Scissors";
+    document.body.appendChild(btnScissors);
+
+    const humanDisplay = document.createElement("div");
+    humanDisplay.textContent = "Waiting for your choice...";
+    document.body.appendChild(humanDisplay);
+
+    const computerDisplay = document.createElement("div");
+    computerDisplay.textContent = "";
+    document.body.appendChild(computerDisplay);
+
+    const resultDisplay = document.createElement("div");
+    resultDisplay.textContent = "";
+    document.body.appendChild(resultDisplay);
+
+    const btnPlayAgain = document.createElement("button");
+    btnPlayAgain.addEventListener("click", () => resetGame());
+    btnPlayAgain.textContent = "Play Again!";
+    document.body.appendChild(btnPlayAgain);
+
+    const allButtons = document.querySelectorAll("button");
+    allButtons.forEach (button => {
+        button.classList.add("uniform-button");
+    })
+
+    const allElements = document.querySelectorAll("div");
+    allElements.forEach (element => {
+        element.classList.add("uniform-text-content");
+    });
+
+
